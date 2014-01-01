@@ -65,7 +65,7 @@ You can create your own design analyzer, code translator and code generator of V
 </ul>
 </li>
 </ul><h2>
-<a name="getting-started" class="anchor" href="#getting-started"><span class="octicon octicon-link"></span></a>Getting Started</h2>
+<a name="functions-" class="anchor" href="#functions-"><span class="octicon octicon-link"></span></a>Functions </h2>
 
 <p>This software includes various tools for Verilog HDL design.</p>
 
@@ -74,7 +74,261 @@ You can create your own design analyzer, code translator and code generator of V
 <li>dataflow: Dataflow analyzer with an optimizer to remove redundant expressions and some dataflow handling tools.</li>
 <li>controlflow: Control-flow analyzer with condition analyzer that identify when a signal is activated.</li>
 <li>ast_code_generator: Verilog HDL code generator from AST.</li>
-</ul><p>To use them, please type 'make' in each sub directory.</p>
+</ul><h2>
+<a name="getting-started" class="anchor" href="#getting-started"><span class="octicon octicon-link"></span></a>Getting Started</h2>
+
+<p>First, please prepare a Verilog HDL source file as below. The file name is 'test.v'.
+This sample design adds the input value internally whtn the enable signal is asserted. Then is outputs its partial value to the LED.</p>
+
+<div class="highlight highlight-verilog"><pre><span class="k">module</span> <span class="n">top</span>
+  <span class="p">(</span>
+   <span class="k">input</span> <span class="no">CLK</span><span class="p">,</span> 
+   <span class="k">input</span> <span class="no">RST</span><span class="p">,</span>
+   <span class="k">input</span> <span class="n">enable</span><span class="p">,</span>
+   <span class="k">input</span> <span class="p">[</span><span class="mh">31</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">value</span><span class="p">,</span>
+   <span class="k">output</span> <span class="p">[</span><span class="mh">7</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">led</span>
+  <span class="p">);</span>
+  <span class="kt">reg</span> <span class="p">[</span><span class="mh">31</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">count</span><span class="p">;</span>
+  <span class="kt">reg</span> <span class="p">[</span><span class="mh">7</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">state</span><span class="p">;</span>
+  <span class="k">assign</span> <span class="n">led</span> <span class="o">=</span> <span class="n">count</span><span class="p">[</span><span class="mh">23</span><span class="o">:</span><span class="mh">16</span><span class="p">];</span>
+  <span class="k">always</span> <span class="p">@(</span><span class="k">posedge</span> <span class="no">CLK</span><span class="p">)</span> <span class="k">begin</span>
+    <span class="k">if</span><span class="p">(</span><span class="no">RST</span><span class="p">)</span> <span class="k">begin</span>
+      <span class="n">count</span> <span class="o">&lt;=</span> <span class="mh">0</span><span class="p">;</span>
+      <span class="n">state</span> <span class="o">&lt;=</span> <span class="mh">0</span><span class="p">;</span>
+    <span class="k">end</span> <span class="k">else</span> <span class="k">begin</span>
+      <span class="k">if</span><span class="p">(</span><span class="n">state</span> <span class="o">==</span> <span class="mh">0</span><span class="p">)</span> <span class="k">begin</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">enable</span><span class="p">)</span> <span class="n">state</span> <span class="o">&lt;=</span> <span class="mh">1</span><span class="p">;</span>
+      <span class="k">end</span> <span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="n">state</span> <span class="o">==</span> <span class="mh">1</span><span class="p">)</span> <span class="k">begin</span>
+        <span class="n">state</span> <span class="o">&lt;=</span> <span class="mh">2</span><span class="p">;</span>
+      <span class="k">end</span> <span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="n">state</span> <span class="o">==</span> <span class="mh">2</span><span class="p">)</span> <span class="k">begin</span>
+        <span class="n">count</span> <span class="o">&lt;=</span> <span class="n">count</span> <span class="o">+</span> <span class="n">value</span><span class="p">;</span>
+        <span class="n">state</span> <span class="o">&lt;=</span> <span class="mh">0</span><span class="p">;</span>
+      <span class="k">end</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+<span class="k">endmodule</span>
+</pre></div>
+
+<p><strong>Code parser</strong></p>
+
+<p>Let's try syntax analysis. Please type the command as below.</p>
+
+<pre><code>python3.3 pyverilog/vparser/parser.py test.v
+</code></pre>
+
+<p>Then you got the result as below. The result of syntax analysis is displayed.</p>
+
+<pre><code>Source: 
+  Description: 
+    ModuleDef: top
+      Paramlist: 
+      Portlist: 
+        Ioport: 
+          Input: CLK, False
+            Width: 
+              IntConst: 0
+              IntConst: 0
+        Ioport: 
+          Input: RST, False
+            Width: 
+              IntConst: 0
+              IntConst: 0
+        Ioport: 
+          Input: enable, False
+            Width: 
+              IntConst: 0
+              IntConst: 0
+        Ioport: 
+          Input: value, False
+            Width: 
+              IntConst: 31
+              IntConst: 0
+        Ioport: 
+          Output: led, False
+            Width: 
+              IntConst: 7
+              IntConst: 0
+      Decl: 
+        Reg: count, False
+          Width: 
+            IntConst: 31
+            IntConst: 0
+      Decl: 
+        Reg: state, False
+          Width: 
+            IntConst: 7
+            IntConst: 0
+      Assign: 
+        Lvalue: 
+          Identifier: led
+        Rvalue: 
+          Partselect: 
+            Identifier: count
+            IntConst: 23
+            IntConst: 16
+      Always: 
+        SensList: 
+          Sens: posedge
+            Identifier: CLK
+        Block: None
+          IfStatement: 
+            Identifier: RST
+            Block: None
+              NonblockingSubstitution: 
+                Lvalue: 
+                  Identifier: count
+                Rvalue: 
+                  IntConst: 0
+              NonblockingSubstitution: 
+                Lvalue: 
+                  Identifier: state
+                Rvalue: 
+                  IntConst: 0
+            Block: None
+              IfStatement: 
+                Eq: 
+                  Identifier: state
+                  IntConst: 0
+                Block: None
+                  IfStatement: 
+                    Identifier: enable
+                    NonblockingSubstitution: 
+                      Lvalue: 
+                        Identifier: state
+                      Rvalue: 
+                        IntConst: 1
+                IfStatement: 
+                  Eq: 
+                    Identifier: state
+                    IntConst: 1
+                  Block: None
+                    NonblockingSubstitution: 
+                      Lvalue: 
+                        Identifier: state
+                      Rvalue: 
+                        IntConst: 2
+                  IfStatement: 
+                    Eq: 
+                      Identifier: state
+                      IntConst: 2
+                    Block: None
+                      NonblockingSubstitution: 
+                        Lvalue: 
+                          Identifier: count
+                        Rvalue: 
+                          Plus: 
+                            Identifier: count
+                            Identifier: value
+                      NonblockingSubstitution: 
+                        Lvalue: 
+                          Identifier: state
+                        Rvalue: 
+                          IntConst: 0
+</code></pre>
+
+<p><strong>Dataflow analyzer</strong></p>
+
+<p>Let's try dataflow analysis. Please type the command as below.</p>
+
+<pre><code>python3.3 pyverilog/dataflow/dataflow_analyzer.py -t top test.v 
+</code></pre>
+
+<p>Then you got the result as below. The result of each signal definition and each signal assignment are displayed.</p>
+
+<pre><code>Directive:
+Instance:
+(top, 'top')
+Term:
+(Term name:top.led type:{'Output'} msb:(IntConst 7) lsb:(IntConst 0))
+(Term name:top.enable type:{'Input'} msb:(IntConst 0) lsb:(IntConst 0))
+(Term name:top.CLK type:{'Input'} msb:(IntConst 0) lsb:(IntConst 0))
+(Term name:top.count type:{'Reg'} msb:(IntConst 31) lsb:(IntConst 0))
+(Term name:top.state type:{'Reg'} msb:(IntConst 7) lsb:(IntConst 0))
+(Term name:top.RST type:{'Input'} msb:(IntConst 0) lsb:(IntConst 0))
+(Term name:top.value type:{'Input'} msb:(IntConst 31) lsb:(IntConst 0))
+Bind:
+(Bind dest:top.count tree:(Branch Cond:(Terminal top.RST) True:(IntConst 0) False:(Branch Cond:(Operator Eq Next:(Terminal top.state),(IntConst 0)) False:(Branch Cond:(Operator Eq Next:(Terminal top.state),(IntConst 1)) False:(Branch Cond:(Operator Eq Next:(Terminal top.state),(IntConst 2)) True:(Operator Plus Next:(Terminal top.count),(Terminal top.value)))))))
+(Bind dest:top.state tree:(Branch Cond:(Terminal top.RST) True:(IntConst 0) False:(Branch Cond:(Operator Eq Next:(Terminal top.state),(IntConst 0)) True:(Branch Cond:(Terminal top.enable) True:(IntConst 1)) False:(Branch Cond:(Operator Eq Next:(Terminal top.state),(IntConst 1)) True:(IntConst 2) False:(Branch Cond:(Operator Eq Next:(Terminal top.state),(IntConst 2)) True:(IntConst 0))))))
+(Bind dest:top.led tree:(Partselect Var:(Terminal top.count) MSB:(IntConst 23) LSB:(IntConst 16)))
+</code></pre>
+
+<p>Let's view the result of dataflow analysis as a picture file. Now we select 'led' as the target. Please type the command as below.</p>
+
+<pre><code>python3.3 pyverilog/dataflow/graphgen.py -t top -s top.led test.v 
+</code></pre>
+
+<p>Then you got a png file (out.png). The picture shows that the definition of 'led' is a part-selection of 'count' from 23-bit to 16-bit.</p>
+
+<p><img src="http://cdn-ak.f.st-hatena.com/images/fotolife/s/sxhxtxa/20140101/20140101045641.png" alt="out.png"></p>
+
+<p><strong>Control-flow analyzer</strong></p>
+
+<p>Let's try control-flow analysis. Please type the command as below.</p>
+
+<pre><code>python2.7 pyverilog/controlflow/controlflow_analyzer.py -t top test.v 
+</code></pre>
+
+<p>Then you got the result as below. The result shows that the state machine structure and transition conditions to the next state in the state machine.</p>
+
+<pre><code>FSM signal: top.count, Condition list length: 4
+FSM signal: top.state, Condition list length: 5
+Condition: (Ulnot, Eq), Inferring transition condition
+Condition: (Eq, top.enable), Inferring transition condition
+Condition: (Ulnot, Ulnot, Eq), Inferring transition condition
+# SIGNAL NAME: top.state
+# DELAY CNT: 0
+0 --(top_enable&gt;'d0)--&gt; 1
+1 --None--&gt; 2
+2 --None--&gt; 0
+Loop
+(0, 1, 2)
+</code></pre>
+
+<p>You got also a png file (top_state.png). The picture shows that the graphical structure of the state machine.</p>
+
+<p><img src="http://cdn-ak.f.st-hatena.com/images/fotolife/s/sxhxtxa/20140101/20140101045835.png" alt="top_state.png"></p>
+
+<p><strong>Code generator</strong></p>
+
+<p>Finally, let's try code generation. Please prepare a Python script as below. The file name is 'test.py'.
+A Verilog HDL code is represented by using the AST classes defined in 'vparser.ast'.</p>
+
+<div class="highlight highlight-python"><pre><span class="kn">import</span> <span class="nn">pyverilog.vparser.ast</span> <span class="kn">as</span> <span class="nn">vast</span>
+<span class="kn">from</span> <span class="nn">pyverilog.ast_code_generator.codegen</span> <span class="kn">import</span> <span class="n">ASTCodeGenerator</span>
+
+<span class="n">params</span> <span class="o">=</span> <span class="n">vast</span><span class="o">.</span><span class="n">Paramlist</span><span class="p">(())</span>
+<span class="n">clk</span> <span class="o">=</span> <span class="n">vast</span><span class="o">.</span><span class="n">Ioport</span><span class="p">(</span> <span class="n">vast</span><span class="o">.</span><span class="n">Input</span><span class="p">(</span><span class="s">'CLK'</span><span class="p">)</span> <span class="p">)</span>
+<span class="n">rst</span> <span class="o">=</span> <span class="n">vast</span><span class="o">.</span><span class="n">Ioport</span><span class="p">(</span> <span class="n">vast</span><span class="o">.</span><span class="n">Input</span><span class="p">(</span><span class="s">'RST'</span><span class="p">)</span> <span class="p">)</span>
+<span class="n">width</span> <span class="o">=</span> <span class="n">vast</span><span class="o">.</span><span class="n">Width</span><span class="p">(</span> <span class="n">vast</span><span class="o">.</span><span class="n">IntConst</span><span class="p">(</span><span class="s">'7'</span><span class="p">),</span> <span class="n">vast</span><span class="o">.</span><span class="n">IntConst</span><span class="p">(</span><span class="s">'0'</span><span class="p">)</span> <span class="p">)</span>
+<span class="n">led</span> <span class="o">=</span> <span class="n">vast</span><span class="o">.</span><span class="n">Ioport</span><span class="p">(</span> <span class="n">vast</span><span class="o">.</span><span class="n">Output</span><span class="p">(</span><span class="s">'led'</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="n">width</span><span class="p">)</span> <span class="p">)</span>
+<span class="n">ports</span> <span class="o">=</span> <span class="n">vast</span><span class="o">.</span><span class="n">Portlist</span><span class="p">(</span> <span class="p">(</span><span class="n">clk</span><span class="p">,</span> <span class="n">rst</span><span class="p">,</span> <span class="n">led</span><span class="p">)</span> <span class="p">)</span>
+<span class="n">items</span> <span class="o">=</span> <span class="p">(</span> <span class="n">vast</span><span class="o">.</span><span class="n">Assign</span><span class="p">(</span> <span class="n">vast</span><span class="o">.</span><span class="n">Identifier</span><span class="p">(</span><span class="s">'led'</span><span class="p">),</span> <span class="n">vast</span><span class="o">.</span><span class="n">IntConst</span><span class="p">(</span><span class="s">'8'</span><span class="p">)</span> <span class="p">)</span> <span class="p">,)</span>
+<span class="n">ast</span> <span class="o">=</span> <span class="n">vast</span><span class="o">.</span><span class="n">ModuleDef</span><span class="p">(</span><span class="s">"top"</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">ports</span><span class="p">,</span> <span class="n">items</span><span class="p">)</span>
+
+<span class="n">codegen</span> <span class="o">=</span> <span class="n">ASTCodeGenerator</span><span class="p">()</span>
+<span class="n">rslt</span> <span class="o">=</span> <span class="n">codegen</span><span class="o">.</span><span class="n">visit</span><span class="p">(</span><span class="n">ast</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">rslt</span><span class="p">)</span>
+</pre></div>
+
+<p>Please type the command as below at the same directory with Pyverilog.</p>
+
+<pre><code>python3.3 test.py
+</code></pre>
+
+<p>Then Verilog HDL code generated from the AST instances is displayed.</p>
+
+<div class="highlight highlight-verilog"><pre>
+<span class="k">module</span> <span class="n">top</span>
+ <span class="p">(</span>
+  <span class="k">input</span> <span class="p">[</span><span class="mh">0</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="no">CLK</span><span class="p">,</span> 
+<span class="k">input</span> <span class="p">[</span><span class="mh">0</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="no">RST</span><span class="p">,</span> 
+<span class="k">output</span> <span class="p">[</span><span class="mh">7</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">led</span>
+
+ <span class="p">);</span>
+  <span class="k">assign</span> <span class="n">led</span> <span class="o">=</span> <span class="mh">8</span><span class="p">;</span>
+<span class="k">endmodule</span>
+
+</pre></div>
 
 <h2>
 <a name="related-project-and-site" class="anchor" href="#related-project-and-site"><span class="octicon octicon-link"></span></a>Related Project and Site</h2>
