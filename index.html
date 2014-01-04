@@ -44,30 +44,32 @@ You can create your own design analyzer, code translator and code generator of V
 <a name="software-requirements" class="anchor" href="#software-requirements"><span class="octicon octicon-link"></span></a>Software Requirements</h2>
 
 <ul>
-<li>Python (2.7 and 3.3 or later)</li>
-<li>Graphviz and Pygraphviz (Python3 does not support)
+<li>Python (2.7, 3.3 or later)</li>
+<li>Icarus Verilog (0.9.6 or later)
 
 <ul>
-<li>graphgen.py in controlflow and controlflow.py in controlflow (without --nograph option) use Pygraphviz with Python 2.7.</li>
-<li>If you do not use graphgen.py and controlflow.py without --nograph option, Python 3 is OK.</li>
+<li>vparser.preprocessor.py uses 'iverilog -E' command insted of the preprocessor.</li>
+<li>'apt-get install iverilog'</li>
+</ul>
+</li>
+<li>Graphviz and Pygraphviz (Python3 does not support Pygraphviz)
+
+<ul>
+<li>graphgen.py in dataflow and controlflow.py in controlflow (without --nograph option) use Pygraphviz with Python 2.7.</li>
+<li>If you do not use graphgen.py and controlflow.py (without --nograph) option, Python 3 is OK.</li>
 </ul>
 </li>
 <li>Jinja2 (2.7 or later)
 
 <ul>
-<li>pip3 install jinja2</li>
-</ul>
-</li>
-<li>Icarus Verilog (0.9.6 or later)
-
-<ul>
-<li>apt-get install iverilog</li>
+<li>ast_code_generator requires jinja2 module</li>
+<li>'pip3 install jinja2'</li>
 </ul>
 </li>
 </ul><h2>
-<a name="functions-" class="anchor" href="#functions-"><span class="octicon octicon-link"></span></a>Functions </h2>
+<a name="tools" class="anchor" href="#tools"><span class="octicon octicon-link"></span></a>Tools</h2>
 
-<p>This software includes various tools for Verilog HDL design.</p>
+<p>This software includes four tools for Verilog HDL design.</p>
 
 <ul>
 <li>vparser: Code parser to generate AST (Abstract Syntax Tree) from source codes of Verilog HDL.</li>
