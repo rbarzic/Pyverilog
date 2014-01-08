@@ -31,8 +31,8 @@
         <hr>
 
         <section id="main_content">
-          <h2>
-<a name="whats-pyverilog" class="anchor" href="#whats-pyverilog"><span class="octicon octicon-link"></span></a>What's Pyverilog?</h2>
+          <h1>
+<a name="whats-pyverilog" class="anchor" href="#whats-pyverilog"><span class="octicon octicon-link"></span></a>What's Pyverilog?</h1>
 
 <p>Pyverilog is open-source hardware design processing toolkit for Verilog HDL.
 All source codes are written in Python.</p>
@@ -40,8 +40,8 @@ All source codes are written in Python.</p>
 <p>Pyverilog includes <strong>(1) code parser, (2) dataflow analyzer, (3) control-flow analyzer and (4) code generator</strong>.
 You can create your own design analyzer, code translator and code generator of Verilog HDL based on this toolkit.</p>
 
-<h2>
-<a name="software-requirements" class="anchor" href="#software-requirements"><span class="octicon octicon-link"></span></a>Software Requirements</h2>
+<h1>
+<a name="software-requirements" class="anchor" href="#software-requirements"><span class="octicon octicon-link"></span></a>Software Requirements</h1>
 
 <ul>
 <li>Python (2.7, 3.3 or later)</li>
@@ -66,18 +66,18 @@ You can create your own design analyzer, code translator and code generator of V
 <li>'pip3 install jinja2'</li>
 </ul>
 </li>
-</ul><h2>
-<a name="tools" class="anchor" href="#tools"><span class="octicon octicon-link"></span></a>Tools</h2>
+</ul><h1>
+<a name="tools" class="anchor" href="#tools"><span class="octicon octicon-link"></span></a>Tools</h1>
 
-<p>This software includes four tools for Verilog HDL design.</p>
+<p>This software includes various tools for Verilog HDL design.</p>
 
 <ul>
 <li>vparser: Code parser to generate AST (Abstract Syntax Tree) from source codes of Verilog HDL.</li>
 <li>dataflow: Dataflow analyzer with an optimizer to remove redundant expressions and some dataflow handling tools.</li>
 <li>controlflow: Control-flow analyzer with condition analyzer that identify when a signal is activated.</li>
 <li>ast_code_generator: Verilog HDL code generator from AST.</li>
-</ul><h2>
-<a name="getting-started" class="anchor" href="#getting-started"><span class="octicon octicon-link"></span></a>Getting Started</h2>
+</ul><h1>
+<a name="getting-started" class="anchor" href="#getting-started"><span class="octicon octicon-link"></span></a>Getting Started</h1>
 
 <p>First, please prepare a Verilog HDL source file as below. The file name is 'test.v'.
 This sample design adds the input value internally whtn the enable signal is asserted. Then is outputs its partial value to the LED.</p>
@@ -111,7 +111,8 @@ This sample design adds the input value internally whtn the enable signal is ass
 <span class="k">endmodule</span>
 </pre></div>
 
-<p><strong>Code parser</strong></p>
+<h2>
+<a name="code-parser" class="anchor" href="#code-parser"><span class="octicon octicon-link"></span></a>Code parser</h2>
 
 <p>Let's try syntax analysis. Please type the command as below.</p>
 
@@ -228,7 +229,8 @@ This sample design adds the input value internally whtn the enable signal is ass
                           IntConst: 0
 </code></pre>
 
-<p><strong>Dataflow analyzer</strong></p>
+<h2>
+<a name="dataflow-analyzer" class="anchor" href="#dataflow-analyzer"><span class="octicon octicon-link"></span></a>Dataflow analyzer</h2>
 
 <p>Let's try dataflow analysis. Please type the command as below.</p>
 
@@ -263,7 +265,8 @@ Bind:
 
 <p><img src="http://cdn-ak.f.st-hatena.com/images/fotolife/s/sxhxtxa/20140101/20140101045641.png" alt="out.png"></p>
 
-<p><strong>Control-flow analyzer</strong></p>
+<h2>
+<a name="control-flow-analyzer" class="anchor" href="#control-flow-analyzer"><span class="octicon octicon-link"></span></a>Control-flow analyzer</h2>
 
 <p>Let's try control-flow analysis. Please type the command as below.</p>
 
@@ -290,7 +293,8 @@ Loop
 
 <p><img src="http://cdn-ak.f.st-hatena.com/images/fotolife/s/sxhxtxa/20140101/20140101045835.png" alt="top_state.png"></p>
 
-<p><strong>Code generator</strong></p>
+<h2>
+<a name="code-generator" class="anchor" href="#code-generator"><span class="octicon octicon-link"></span></a>Code generator</h2>
 
 <p>Finally, let's try code generation. Please prepare a Python script as below. The file name is 'test.py'.
 A Verilog HDL code is represented by using the AST classes defined in 'vparser.ast'.</p>
@@ -332,8 +336,8 @@ A Verilog HDL code is represented by using the AST classes defined in 'vparser.a
 
 </pre></div>
 
-<h2>
-<a name="related-project-and-site" class="anchor" href="#related-project-and-site"><span class="octicon octicon-link"></span></a>Related Project and Site</h2>
+<h1>
+<a name="related-project-and-site" class="anchor" href="#related-project-and-site"><span class="octicon octicon-link"></span></a>Related Project and Site</h1>
 
 <p><a href="http://shtaxxx.github.io/PyCoRAM/">PyCoRAM</a></p>
 
@@ -343,8 +347,8 @@ A Verilog HDL code is represented by using the AST classes defined in 'vparser.a
 
 <ul>
 <li>Blog entry for introduction and examples of Pyverilog (in Japansese)</li>
-</ul><h2>
-<a name="license" class="anchor" href="#license"><span class="octicon octicon-link"></span></a>License</h2>
+</ul><h1>
+<a name="license" class="anchor" href="#license"><span class="octicon octicon-link"></span></a>License</h1>
 
 <p>Apache License 2.0
 (<a href="http://www.apache.org/licenses/LICENSE-2.0">http://www.apache.org/licenses/LICENSE-2.0</a>)</p>
@@ -352,8 +356,8 @@ A Verilog HDL code is represented by using the AST classes defined in 'vparser.a
 <p>This software package includes PLY-3.4.
 The license of PLY is BSD.</p>
 
-<h2>
-<a name="copyright-and-contact" class="anchor" href="#copyright-and-contact"><span class="octicon octicon-link"></span></a>Copyright and Contact</h2>
+<h1>
+<a name="copyright-and-contact" class="anchor" href="#copyright-and-contact"><span class="octicon octicon-link"></span></a>Copyright and Contact</h1>
 
 <p>Copyright (C) 2013, Shinya Takamaeda-Yamazaki</p>
 
