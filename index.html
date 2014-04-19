@@ -116,7 +116,7 @@ This sample design adds the input value internally whtn the enable signal is ass
 
 <p>Let's try syntax analysis. Please type the command as below.</p>
 
-<pre><code>python3.3 pyverilog/vparser/parser.py test.v
+<pre><code>python3 pyverilog/vparser/parser.py test.v
 </code></pre>
 
 <p>Then you got the result as below. The result of syntax analysis is displayed.</p>
@@ -234,7 +234,7 @@ This sample design adds the input value internally whtn the enable signal is ass
 
 <p>Let's try dataflow analysis. Please type the command as below.</p>
 
-<pre><code>python3.3 pyverilog/dataflow/dataflow_analyzer.py -t top test.v 
+<pre><code>python3 pyverilog/dataflow/dataflow_analyzer.py -t top test.v 
 </code></pre>
 
 <p>Then you got the result as below. The result of each signal definition and each signal assignment are displayed.</p>
@@ -258,7 +258,7 @@ Bind:
 
 <p>Let's view the result of dataflow analysis as a picture file. Now we select 'led' as the target. Please type the command as below.</p>
 
-<pre><code>python3.3 pyverilog/dataflow/graphgen.py -t top -s top.led test.v 
+<pre><code>python3 pyverilog/dataflow/graphgen.py -t top -s top.led test.v 
 </code></pre>
 
 <p>Then you got a png file (out.png). The picture shows that the definition of 'led' is a part-selection of 'count' from 23-bit to 16-bit.</p>
@@ -318,7 +318,7 @@ A Verilog HDL code is represented by using the AST classes defined in 'vparser.a
 
 <p>Please type the command as below at the same directory with Pyverilog.</p>
 
-<pre><code>python3.3 test.py
+<pre><code>python3 test.py
 </code></pre>
 
 <p>Then Verilog HDL code generated from the AST instances is displayed.</p>
@@ -359,9 +359,9 @@ The license of PLY is BSD.</p>
 <h1>
 <a name="copyright-and-contact" class="anchor" href="#copyright-and-contact"><span class="octicon octicon-link"></span></a>Copyright and Contact</h1>
 
-<p>Copyright (C) 2013, Shinya Takamaeda-Yamazaki</p>
+<p>Copyright (C) 2014, Shinya Takamaeda-Yamazaki</p>
 
-<p>E-mail: takamaeda_at_arch.cs.titech.ac.jp</p>
+<p>E-mail: shinya_at_is.naist.jp</p>
         </section>
 
         <footer>
