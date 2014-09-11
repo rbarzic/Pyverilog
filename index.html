@@ -4,9 +4,9 @@
     <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
     <link href='https://fonts.googleapis.com/css?family=Chivo:900' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
     <!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
@@ -34,8 +34,7 @@
           <h1>
 <a name="whats-pyverilog" class="anchor" href="#whats-pyverilog"><span class="octicon octicon-link"></span></a>What's Pyverilog?</h1>
 
-<p>Pyverilog is open-source hardware design processing toolkit for Verilog HDL.
-All source codes are written in Python.</p>
+<p>Pyverilog is an open-source hardware design processing toolkit for Verilog HDL. All source codes are written in Python.</p>
 
 <p>Pyverilog includes <strong>(1) code parser, (2) dataflow analyzer, (3) control-flow analyzer and (4) code generator</strong>.
 You can create your own design analyzer, code translator and code generator of Verilog HDL based on this toolkit.</p>
@@ -48,22 +47,22 @@ You can create your own design analyzer, code translator and code generator of V
 <li>Icarus Verilog (0.9.6 or later)
 
 <ul>
-<li>vparser.preprocessor.py uses 'iverilog -E' command instead of the preprocessor.</li>
+<li>pyverilog.vparser.preprocessor.py uses 'iverilog -E' command as the preprocessor.</li>
 <li>'apt-get install iverilog'</li>
 </ul>
 </li>
 <li>Graphviz and Pygraphviz (Python3 does not support Pygraphviz)
 
 <ul>
-<li>graphgen.py in dataflow and controlflow.py in controlflow (without --nograph option) use Pygraphviz with Python 2.7.</li>
-<li>If you do not use graphgen.py and controlflow.py (without --nograph) option, Python 3 is OK.</li>
+<li>pyverilog.dataflow.graphgen and pyverilog.controlflow.controlflow (without --nograph option) use Pygraphviz (on Python 2.7).</li>
+<li>If you do not use graphgen and controlflow (without --nograph) option, Python 3.x is fine.</li>
 </ul>
 </li>
 <li>Jinja2 (2.7 or later)
 
 <ul>
 <li>ast_code_generator requires jinja2 module.</li>
-<li>'pip3 install jinja2'</li>
+<li>'pip3 install jinja2' (for Python 3.x) or 'pip install jinja2' (for Python 2.7)</li>
 </ul>
 </li>
 </ul><h1>
@@ -353,13 +352,12 @@ A Verilog HDL code is represented by using the AST classes defined in 'vparser.a
 <p>Apache License 2.0
 (<a href="http://www.apache.org/licenses/LICENSE-2.0">http://www.apache.org/licenses/LICENSE-2.0</a>)</p>
 
-<p>This software package includes PLY-3.4.
-The license of PLY is BSD.</p>
+<p>This software package includes PLY-3.4 in "vparser/ply". The license of PLY is BSD.</p>
 
 <h1>
 <a name="copyright-and-contact" class="anchor" href="#copyright-and-contact"><span class="octicon octicon-link"></span></a>Copyright and Contact</h1>
 
-<p>Copyright (C) 2014, Shinya Takamaeda-Yamazaki</p>
+<p>Copyright (C) 2013, Shinya Takamaeda-Yamazaki</p>
 
 <p>E-mail: shinya_at_is.naist.jp</p>
         </section>
