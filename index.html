@@ -32,7 +32,7 @@
 
         <section id="main_content">
           <h1>
-<a name="whats-pyverilog" class="anchor" href="#whats-pyverilog"><span class="octicon octicon-link"></span></a>What's Pyverilog?</h1>
+<a id="whats-pyverilog" class="anchor" href="#whats-pyverilog" aria-hidden="true"><span class="octicon octicon-link"></span></a>What's Pyverilog?</h1>
 
 <p>Pyverilog is an open-source hardware design processing toolkit for Verilog HDL. All source codes are written in Python.</p>
 
@@ -40,7 +40,7 @@
 You can create your own design analyzer, code translator and code generator of Verilog HDL based on this toolkit.</p>
 
 <h1>
-<a name="software-requirements" class="anchor" href="#software-requirements"><span class="octicon octicon-link"></span></a>Software Requirements</h1>
+<a id="software-requirements" class="anchor" href="#software-requirements" aria-hidden="true"><span class="octicon octicon-link"></span></a>Software Requirements</h1>
 
 <ul>
 <li>Python (2.7, 3.3 or later)</li>
@@ -65,8 +65,10 @@ You can create your own design analyzer, code translator and code generator of V
 <li>'pip3 install jinja2' (for Python 3.x) or 'pip install jinja2' (for Python 2.7)</li>
 </ul>
 </li>
-</ul><h1>
-<a name="installation" class="anchor" href="#installation"><span class="octicon octicon-link"></span></a>Installation</h1>
+</ul>
+
+<h1>
+<a id="installation" class="anchor" href="#installation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Installation</h1>
 
 <p>If you want to use Pyverilog as a general library, you can install on your environment by using setup.py.</p>
 
@@ -81,7 +83,7 @@ You can create your own design analyzer, code translator and code generator of V
 </code></pre>
 
 <h1>
-<a name="tools" class="anchor" href="#tools"><span class="octicon octicon-link"></span></a>Tools</h1>
+<a id="tools" class="anchor" href="#tools" aria-hidden="true"><span class="octicon octicon-link"></span></a>Tools</h1>
 
 <p>This software includes various tools for Verilog HDL design.</p>
 
@@ -90,43 +92,44 @@ You can create your own design analyzer, code translator and code generator of V
 <li>dataflow: Dataflow analyzer with an optimizer to remove redundant expressions and some dataflow handling tools.</li>
 <li>controlflow: Control-flow analyzer with condition analyzer that identify when a signal is activated.</li>
 <li>ast_code_generator: Verilog HDL code generator from AST.</li>
-</ul><h1>
-<a name="getting-started" class="anchor" href="#getting-started"><span class="octicon octicon-link"></span></a>Getting Started</h1>
+</ul>
+
+<h1>
+<a id="getting-started" class="anchor" href="#getting-started" aria-hidden="true"><span class="octicon octicon-link"></span></a>Getting Started</h1>
 
 <p>First, please prepare a Verilog HDL source file as below. The file name is 'test.v'.
 This sample design adds the input value internally whtn the enable signal is asserted. Then is outputs its partial value to the LED.</p>
 
-<div class="highlight highlight-verilog"><pre><span class="k">module</span> <span class="n">top</span>
-  <span class="p">(</span>
-   <span class="k">input</span> <span class="no">CLK</span><span class="p">,</span> 
-   <span class="k">input</span> <span class="no">RST</span><span class="p">,</span>
-   <span class="k">input</span> <span class="n">enable</span><span class="p">,</span>
-   <span class="k">input</span> <span class="p">[</span><span class="mh">31</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">value</span><span class="p">,</span>
-   <span class="k">output</span> <span class="p">[</span><span class="mh">7</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">led</span>
-  <span class="p">);</span>
-  <span class="kt">reg</span> <span class="p">[</span><span class="mh">31</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">count</span><span class="p">;</span>
-  <span class="kt">reg</span> <span class="p">[</span><span class="mh">7</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">state</span><span class="p">;</span>
-  <span class="k">assign</span> <span class="n">led</span> <span class="o">=</span> <span class="n">count</span><span class="p">[</span><span class="mh">23</span><span class="o">:</span><span class="mh">16</span><span class="p">];</span>
-  <span class="k">always</span> <span class="p">@(</span><span class="k">posedge</span> <span class="no">CLK</span><span class="p">)</span> <span class="k">begin</span>
-    <span class="k">if</span><span class="p">(</span><span class="no">RST</span><span class="p">)</span> <span class="k">begin</span>
-      <span class="n">count</span> <span class="o">&lt;=</span> <span class="mh">0</span><span class="p">;</span>
-      <span class="n">state</span> <span class="o">&lt;=</span> <span class="mh">0</span><span class="p">;</span>
-    <span class="k">end</span> <span class="k">else</span> <span class="k">begin</span>
-      <span class="k">if</span><span class="p">(</span><span class="n">state</span> <span class="o">==</span> <span class="mh">0</span><span class="p">)</span> <span class="k">begin</span>
-        <span class="k">if</span><span class="p">(</span><span class="n">enable</span><span class="p">)</span> <span class="n">state</span> <span class="o">&lt;=</span> <span class="mh">1</span><span class="p">;</span>
-      <span class="k">end</span> <span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="n">state</span> <span class="o">==</span> <span class="mh">1</span><span class="p">)</span> <span class="k">begin</span>
-        <span class="n">state</span> <span class="o">&lt;=</span> <span class="mh">2</span><span class="p">;</span>
-      <span class="k">end</span> <span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="n">state</span> <span class="o">==</span> <span class="mh">2</span><span class="p">)</span> <span class="k">begin</span>
-        <span class="n">count</span> <span class="o">&lt;=</span> <span class="n">count</span> <span class="o">+</span> <span class="n">value</span><span class="p">;</span>
-        <span class="n">state</span> <span class="o">&lt;=</span> <span class="mh">0</span><span class="p">;</span>
-      <span class="k">end</span>
-    <span class="k">end</span>
-  <span class="k">end</span>
-<span class="k">endmodule</span>
-</pre></div>
+<div class="highlight highlight-verilog"><pre><span class="pl-k">module</span> <span class="pl-en">top</span>
+  (
+   <span class="pl-k">input</span> CLK, 
+   <span class="pl-k">input</span> RST,
+   <span class="pl-k">input</span> enable,
+   <span class="pl-k">input</span> [<span class="pl-c1">31</span>:<span class="pl-c1">0</span>] value,
+   <span class="pl-k">output</span> [<span class="pl-c1">7</span>:<span class="pl-c1">0</span>] led
+  );
+  <span class="pl-k">reg</span> [<span class="pl-c1">31</span>:<span class="pl-c1">0</span>] count;
+  <span class="pl-k">reg</span> [<span class="pl-c1">7</span>:<span class="pl-c1">0</span>] state;
+  <span class="pl-k">assign</span> led <span class="pl-k">=</span> count[<span class="pl-c1">23</span>:<span class="pl-c1">16</span>];
+  <span class="pl-k">always</span> @(<span class="pl-k">posedge</span> CLK) <span class="pl-k">begin</span>
+    <span class="pl-k">if</span>(RST) <span class="pl-k">begin</span>
+      count <span class="pl-k">&lt;=</span> <span class="pl-c1">0</span>;
+      state <span class="pl-k">&lt;=</span> <span class="pl-c1">0</span>;
+    <span class="pl-k">end</span> <span class="pl-k">else</span> <span class="pl-k">begin</span>
+      <span class="pl-k">if</span>(state <span class="pl-k">==</span> <span class="pl-c1">0</span>) <span class="pl-k">begin</span>
+        <span class="pl-k">if</span>(enable) state <span class="pl-k">&lt;=</span> <span class="pl-c1">1</span>;
+      <span class="pl-k">end</span> <span class="pl-k">else</span> <span class="pl-k">if</span>(state <span class="pl-k">==</span> <span class="pl-c1">1</span>) <span class="pl-k">begin</span>
+        state <span class="pl-k">&lt;=</span> <span class="pl-c1">2</span>;
+      <span class="pl-k">end</span> <span class="pl-k">else</span> <span class="pl-k">if</span>(state <span class="pl-k">==</span> <span class="pl-c1">2</span>) <span class="pl-k">begin</span>
+        count <span class="pl-k">&lt;=</span> count <span class="pl-k">+</span> value;
+        state <span class="pl-k">&lt;=</span> <span class="pl-c1">0</span>;
+      <span class="pl-k">end</span>
+    <span class="pl-k">end</span>
+  <span class="pl-k">end</span>
+<span class="pl-k">endmodule</span></pre></div>
 
 <h2>
-<a name="code-parser" class="anchor" href="#code-parser"><span class="octicon octicon-link"></span></a>Code parser</h2>
+<a id="code-parser" class="anchor" href="#code-parser" aria-hidden="true"><span class="octicon octicon-link"></span></a>Code parser</h2>
 
 <p>Let's try syntax analysis. Please type the command as below.</p>
 
@@ -244,7 +247,7 @@ This sample design adds the input value internally whtn the enable signal is ass
 </code></pre>
 
 <h2>
-<a name="dataflow-analyzer" class="anchor" href="#dataflow-analyzer"><span class="octicon octicon-link"></span></a>Dataflow analyzer</h2>
+<a id="dataflow-analyzer" class="anchor" href="#dataflow-analyzer" aria-hidden="true"><span class="octicon octicon-link"></span></a>Dataflow analyzer</h2>
 
 <p>Let's try dataflow analysis. Please type the command as below.</p>
 
@@ -280,7 +283,7 @@ Bind:
 <p><img src="http://cdn-ak.f.st-hatena.com/images/fotolife/s/sxhxtxa/20140101/20140101045641.png" alt="out.png"></p>
 
 <h2>
-<a name="control-flow-analyzer" class="anchor" href="#control-flow-analyzer"><span class="octicon octicon-link"></span></a>Control-flow analyzer</h2>
+<a id="control-flow-analyzer" class="anchor" href="#control-flow-analyzer" aria-hidden="true"><span class="octicon octicon-link"></span></a>Control-flow analyzer</h2>
 
 <p>Let's try control-flow analysis. Please type the command as below.</p>
 
@@ -308,27 +311,26 @@ Loop
 <p><img src="http://cdn-ak.f.st-hatena.com/images/fotolife/s/sxhxtxa/20140101/20140101045835.png" alt="top_state.png"></p>
 
 <h2>
-<a name="code-generator" class="anchor" href="#code-generator"><span class="octicon octicon-link"></span></a>Code generator</h2>
+<a id="code-generator" class="anchor" href="#code-generator" aria-hidden="true"><span class="octicon octicon-link"></span></a>Code generator</h2>
 
 <p>Finally, let's try code generation. Please prepare a Python script as below. The file name is 'test.py'.
 A Verilog HDL code is represented by using the AST classes defined in 'vparser.ast'.</p>
 
-<div class="highlight highlight-python"><pre><span class="kn">import</span> <span class="nn">pyverilog.vparser.ast</span> <span class="kn">as</span> <span class="nn">vast</span>
-<span class="kn">from</span> <span class="nn">pyverilog.ast_code_generator.codegen</span> <span class="kn">import</span> <span class="n">ASTCodeGenerator</span>
+<div class="highlight highlight-python"><pre><span class="pl-k">import</span> pyverilog.vparser.ast <span class="pl-k">as</span> vast
+<span class="pl-k">from</span> pyverilog.ast_code_generator.codegen <span class="pl-k">import</span> ASTCodeGenerator
 
-<span class="n">params</span> <span class="o">=</span> <span class="n">vast</span><span class="o">.</span><span class="n">Paramlist</span><span class="p">(())</span>
-<span class="n">clk</span> <span class="o">=</span> <span class="n">vast</span><span class="o">.</span><span class="n">Ioport</span><span class="p">(</span> <span class="n">vast</span><span class="o">.</span><span class="n">Input</span><span class="p">(</span><span class="s">'CLK'</span><span class="p">)</span> <span class="p">)</span>
-<span class="n">rst</span> <span class="o">=</span> <span class="n">vast</span><span class="o">.</span><span class="n">Ioport</span><span class="p">(</span> <span class="n">vast</span><span class="o">.</span><span class="n">Input</span><span class="p">(</span><span class="s">'RST'</span><span class="p">)</span> <span class="p">)</span>
-<span class="n">width</span> <span class="o">=</span> <span class="n">vast</span><span class="o">.</span><span class="n">Width</span><span class="p">(</span> <span class="n">vast</span><span class="o">.</span><span class="n">IntConst</span><span class="p">(</span><span class="s">'7'</span><span class="p">),</span> <span class="n">vast</span><span class="o">.</span><span class="n">IntConst</span><span class="p">(</span><span class="s">'0'</span><span class="p">)</span> <span class="p">)</span>
-<span class="n">led</span> <span class="o">=</span> <span class="n">vast</span><span class="o">.</span><span class="n">Ioport</span><span class="p">(</span> <span class="n">vast</span><span class="o">.</span><span class="n">Output</span><span class="p">(</span><span class="s">'led'</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="n">width</span><span class="p">)</span> <span class="p">)</span>
-<span class="n">ports</span> <span class="o">=</span> <span class="n">vast</span><span class="o">.</span><span class="n">Portlist</span><span class="p">(</span> <span class="p">(</span><span class="n">clk</span><span class="p">,</span> <span class="n">rst</span><span class="p">,</span> <span class="n">led</span><span class="p">)</span> <span class="p">)</span>
-<span class="n">items</span> <span class="o">=</span> <span class="p">(</span> <span class="n">vast</span><span class="o">.</span><span class="n">Assign</span><span class="p">(</span> <span class="n">vast</span><span class="o">.</span><span class="n">Identifier</span><span class="p">(</span><span class="s">'led'</span><span class="p">),</span> <span class="n">vast</span><span class="o">.</span><span class="n">IntConst</span><span class="p">(</span><span class="s">'8'</span><span class="p">)</span> <span class="p">)</span> <span class="p">,)</span>
-<span class="n">ast</span> <span class="o">=</span> <span class="n">vast</span><span class="o">.</span><span class="n">ModuleDef</span><span class="p">(</span><span class="s">"top"</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">ports</span><span class="p">,</span> <span class="n">items</span><span class="p">)</span>
+params <span class="pl-k">=</span> vast.Paramlist(())
+clk <span class="pl-k">=</span> vast.Ioport( vast.Input(<span class="pl-s"><span class="pl-pds">'</span>CLK<span class="pl-pds">'</span></span>) )
+rst <span class="pl-k">=</span> vast.Ioport( vast.Input(<span class="pl-s"><span class="pl-pds">'</span>RST<span class="pl-pds">'</span></span>) )
+width <span class="pl-k">=</span> vast.Width( vast.IntConst(<span class="pl-s"><span class="pl-pds">'</span>7<span class="pl-pds">'</span></span>), vast.IntConst(<span class="pl-s"><span class="pl-pds">'</span>0<span class="pl-pds">'</span></span>) )
+led <span class="pl-k">=</span> vast.Ioport( vast.Output(<span class="pl-s"><span class="pl-pds">'</span>led<span class="pl-pds">'</span></span>, <span class="pl-smi">width</span><span class="pl-k">=</span>width) )
+ports <span class="pl-k">=</span> vast.Portlist( (clk, rst, led) )
+items <span class="pl-k">=</span> ( vast.Assign( vast.Identifier(<span class="pl-s"><span class="pl-pds">'</span>led<span class="pl-pds">'</span></span>), vast.IntConst(<span class="pl-s"><span class="pl-pds">'</span>8<span class="pl-pds">'</span></span>) ) ,)
+ast <span class="pl-k">=</span> vast.ModuleDef(<span class="pl-s"><span class="pl-pds">"</span>top<span class="pl-pds">"</span></span>, params, ports, items)
 
-<span class="n">codegen</span> <span class="o">=</span> <span class="n">ASTCodeGenerator</span><span class="p">()</span>
-<span class="n">rslt</span> <span class="o">=</span> <span class="n">codegen</span><span class="o">.</span><span class="n">visit</span><span class="p">(</span><span class="n">ast</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="n">rslt</span><span class="p">)</span>
-</pre></div>
+codegen <span class="pl-k">=</span> ASTCodeGenerator()
+rslt <span class="pl-k">=</span> codegen.visit(ast)
+<span class="pl-k">print</span>(rslt)</pre></div>
 
 <p>Please type the command as below at the same directory with Pyverilog.</p>
 
@@ -338,31 +340,55 @@ A Verilog HDL code is represented by using the AST classes defined in 'vparser.a
 <p>Then Verilog HDL code generated from the AST instances is displayed.</p>
 
 <div class="highlight highlight-verilog"><pre>
-<span class="k">module</span> <span class="n">top</span>
- <span class="p">(</span>
-  <span class="k">input</span> <span class="p">[</span><span class="mh">0</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="no">CLK</span><span class="p">,</span> 
-<span class="k">input</span> <span class="p">[</span><span class="mh">0</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="no">RST</span><span class="p">,</span> 
-<span class="k">output</span> <span class="p">[</span><span class="mh">7</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">led</span>
+<span class="pl-k">module</span> <span class="pl-en">top</span>
+ (
+  <span class="pl-k">input</span> [<span class="pl-c1">0</span>:<span class="pl-c1">0</span>] CLK, 
+<span class="pl-k">input</span> [<span class="pl-c1">0</span>:<span class="pl-c1">0</span>] RST, 
+<span class="pl-k">output</span> [<span class="pl-c1">7</span>:<span class="pl-c1">0</span>] led
 
- <span class="p">);</span>
-  <span class="k">assign</span> <span class="n">led</span> <span class="o">=</span> <span class="mh">8</span><span class="p">;</span>
-<span class="k">endmodule</span>
-
+ );
+  <span class="pl-k">assign</span> led <span class="pl-k">=</span> <span class="pl-c1">8</span>;
+<span class="pl-k">endmodule</span>
 </pre></div>
 
 <h1>
-<a name="related-project-and-site" class="anchor" href="#related-project-and-site"><span class="octicon octicon-link"></span></a>Related Project and Site</h1>
+<a id="publication" class="anchor" href="#publication" aria-hidden="true"><span class="octicon octicon-link"></span></a>Publication</h1>
+
+<ul>
+<li>Shinya Takamaeda-Yamazaki: Pyverilog: A Python-based Hardware Design Processing Toolkit for Verilog HDL, 11th International Symposium on Applied Reconfigurable Computing (ARC 2015) (Poster), Lecture Notes in Computer Science, Vol.9040/2015, pp.451-460, April 2015.
+<a href="http://link.springer.com/chapter/10.1007/978-3-319-16214-0_42">Paper</a>
+</li>
+</ul>
+
+<h1>
+<a id="related-project-and-site" class="anchor" href="#related-project-and-site" aria-hidden="true"><span class="octicon octicon-link"></span></a>Related Project and Site</h1>
 
 <p><a href="http://shtaxxx.github.io/PyCoRAM/">PyCoRAM</a></p>
 
 <ul>
-<li>Python-based Implementation of CoRAM Memory Architecture for AXI4 Interconnection on FPGAs</li>
-</ul><p><a href="http://shtaxxx.hatenablog.com/entry/2014/01/01/045856">shtaxxx.hatenablog.com</a></p>
+<li>Python-based Portable IP-core Synthesis Framework for FPGA-based Computing</li>
+</ul>
+
+<p><a href="http://shtaxxx.github.io/flipSyrup/">flipSyrup</a></p>
+
+<ul>
+<li>Cycle-Accurate Hardware Simulation Framework on Abstract FPGA Platforms</li>
+</ul>
+
+<p><a href="https://github.com/fukatani/Pyverilog_toolbox">Pyverilog_toolbox</a></p>
+
+<ul>
+<li>Pyverilog_toolbox is Pyverilog-based verification/design tool, which is developed by Fukatani-san and uses Pyverilog as a fundamental library. Thanks for your contribution!</li>
+</ul>
+
+<p><a href="http://shtaxxx.hatenablog.com/entry/2014/01/01/045856">shtaxxx.hatenablog.com</a></p>
 
 <ul>
 <li>Blog entry for introduction and examples of Pyverilog (in Japansese)</li>
-</ul><h1>
-<a name="license" class="anchor" href="#license"><span class="octicon octicon-link"></span></a>License</h1>
+</ul>
+
+<h1>
+<a id="license" class="anchor" href="#license" aria-hidden="true"><span class="octicon octicon-link"></span></a>License</h1>
 
 <p>Apache License 2.0
 (<a href="http://www.apache.org/licenses/LICENSE-2.0">http://www.apache.org/licenses/LICENSE-2.0</a>)</p>
@@ -370,7 +396,7 @@ A Verilog HDL code is represented by using the AST classes defined in 'vparser.a
 <p>This software package includes PLY-3.4 in "vparser/ply". The license of PLY is BSD.</p>
 
 <h1>
-<a name="copyright-and-contact" class="anchor" href="#copyright-and-contact"><span class="octicon octicon-link"></span></a>Copyright and Contact</h1>
+<a id="copyright-and-contact" class="anchor" href="#copyright-and-contact" aria-hidden="true"><span class="octicon octicon-link"></span></a>Copyright and Contact</h1>
 
 <p>Copyright (C) 2013, Shinya Takamaeda-Yamazaki</p>
 
@@ -379,7 +405,7 @@ A Verilog HDL code is represented by using the AST classes defined in 'vparser.a
 
         <footer>
           Pyverilog is maintained by <a href="https://github.com/shtaxxx">shtaxxx</a><br>
-          This page was generated by <a href="http://pages.github.com">GitHub Pages</a>. Tactile theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.
+          This page was generated by <a href="https://pages.github.com">GitHub Pages</a>. Tactile theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.
         </footer>
 
         
