@@ -5,12 +5,12 @@
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
     <link href='https://fonts.googleapis.com/css?family=Chivo:900' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-dark.css" media="screen">
     <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
     <!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
-    <title>Pyverilog by shtaxxx</title>
+    <title>Pyverilog by PyHDI</title>
   </head>
 
   <body>
@@ -23,15 +23,41 @@
         </header>
 
         <section id="downloads" class="clearfix">
-          <a href="https://github.com/shtaxxx/Pyverilog/zipball/master" id="download-zip" class="button"><span>Download .zip</span></a>
-          <a href="https://github.com/shtaxxx/Pyverilog/tarball/master" id="download-tar-gz" class="button"><span>Download .tar.gz</span></a>
-          <a href="https://github.com/shtaxxx/Pyverilog" id="view-on-github" class="button"><span>View on GitHub</span></a>
+          <a href="https://github.com/PyHDI/Pyverilog/zipball/master" id="download-zip" class="button"><span>Download .zip</span></a>
+          <a href="https://github.com/PyHDI/Pyverilog/tarball/master" id="download-tar-gz" class="button"><span>Download .tar.gz</span></a>
+          <a href="https://github.com/PyHDI/Pyverilog" id="view-on-github" class="button"><span>View on GitHub</span></a>
         </section>
 
         <hr>
 
         <section id="main_content">
           <h1>
+<a id="publication" class="anchor" href="#publication" aria-hidden="true"><span class="octicon octicon-link"></span></a>Publication</h1>
+
+<p>If you use Pyverilog in your research, please cite my paper.</p>
+
+<ul>
+<li>Shinya Takamaeda-Yamazaki: Pyverilog: A Python-based Hardware Design Processing Toolkit for Verilog HDL, 11th International Symposium on Applied Reconfigurable Computing (ARC 2015) (Poster), Lecture Notes in Computer Science, Vol.9040/2015, pp.451-460, April 2015.
+<a href="http://link.springer.com/chapter/10.1007/978-3-319-16214-0_42">Paper</a>
+</li>
+</ul>
+
+<pre><code>@inproceedings{Takamaeda:2015:ARC:Pyverilog,
+title={Pyverilog: A Python-Based Hardware Design Processing Toolkit for Verilog HDL},
+author={Takamaeda-Yamazaki, Shinya},
+booktitle={Applied Reconfigurable Computing},
+month={Apr},
+year={2015},
+pages={451-460},
+volume={9040},
+series={Lecture Notes in Computer Science},
+publisher={Springer International Publishing},
+doi={10.1007/978-3-319-16214-0_42},
+url={http://dx.doi.org/10.1007/978-3-319-16214-0_42},
+}
+</code></pre>
+
+<h1>
 <a id="whats-pyverilog" class="anchor" href="#whats-pyverilog" aria-hidden="true"><span class="octicon octicon-link"></span></a>What's Pyverilog?</h1>
 
 <p>Pyverilog is an open-source hardware design processing toolkit for Verilog HDL. All source codes are written in Python.</p>
@@ -40,46 +66,57 @@
 You can create your own design analyzer, code translator and code generator of Verilog HDL based on this toolkit.</p>
 
 <h1>
-<a id="software-requirements" class="anchor" href="#software-requirements" aria-hidden="true"><span class="octicon octicon-link"></span></a>Software Requirements</h1>
-
-<ul>
-<li>Python (2.7, 3.3 or later)</li>
-<li>Icarus Verilog (0.9.6 or later)
-
-<ul>
-<li>pyverilog.vparser.preprocessor.py uses 'iverilog -E' command as the preprocessor.</li>
-<li>'apt-get install iverilog'</li>
-</ul>
-</li>
-<li>Graphviz and Pygraphviz (Python3 does not support Pygraphviz)
-
-<ul>
-<li>pyverilog.dataflow.graphgen and pyverilog.controlflow.controlflow (without --nograph option) use Pygraphviz (on Python 2.7).</li>
-<li>If you do not use graphgen and controlflow (without --nograph) option, Python 3.x is fine.</li>
-</ul>
-</li>
-<li>Jinja2 (2.7 or later)
-
-<ul>
-<li>ast_code_generator requires jinja2 module.</li>
-<li>'pip3 install jinja2' (for Python 3.x) or 'pip install jinja2' (for Python 2.7)</li>
-</ul>
-</li>
-</ul>
-
-<h1>
 <a id="installation" class="anchor" href="#installation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Installation</h1>
 
-<p>If you want to use Pyverilog as a general library, you can install on your environment by using setup.py.</p>
+<h2>
+<a id="requirements" class="anchor" href="#requirements" aria-hidden="true"><span class="octicon octicon-link"></span></a>Requirements</h2>
 
-<p>If Python 2.7 is used,</p>
+<ul>
+<li>Python: 2.7, 3.4 or later</li>
+</ul>
 
-<pre><code>python setup.py install
+<p>Python3 is recommended.</p>
+
+<ul>
+<li>Icarus Verilog: 0.9.7 or later</li>
+</ul>
+
+<p>Install on your platform. For exmple, on Ubuntu:</p>
+
+<pre><code>sudo apt-get install iverilog
 </code></pre>
 
-<p>If Python 3.x is used,</p>
+<ul>
+<li>Jinja2: 2.8 or later</li>
+<li>pytest: 2.8.2 or later</li>
+<li>pytest-pythonpath: 0.7 or later</li>
+</ul>
 
-<pre><code>python3 setup.py install
+<p>Install on your python environment by using pip.</p>
+
+<pre><code>pip install jinja2 pytest pytest-pythonpath
+</code></pre>
+
+<h2>
+<a id="options" class="anchor" href="#options" aria-hidden="true"><span class="octicon octicon-link"></span></a>Options</h2>
+
+<ul>
+<li>Graphviz: 2.38.0 or later</li>
+<li>Pygraphviz: 1.3.1 or later</li>
+</ul>
+
+<p>These softwares are option for graph visualization in dataflow/graphgen.py and controlflow/controlflow_analyzer.py.</p>
+
+<pre><code>sudo apt-get install graphviz
+pip install pygraphviz
+</code></pre>
+
+<h2>
+<a id="install" class="anchor" href="#install" aria-hidden="true"><span class="octicon octicon-link"></span></a>Install</h2>
+
+<p>Install Pyverilog.</p>
+
+<pre><code>python setup.py install
 </code></pre>
 
 <h1>
@@ -100,7 +137,7 @@ You can create your own design analyzer, code translator and code generator of V
 <p>First, please prepare a Verilog HDL source file as below. The file name is 'test.v'.
 This sample design adds the input value internally whtn the enable signal is asserted. Then is outputs its partial value to the LED.</p>
 
-<div class="highlight highlight-verilog"><pre><span class="pl-k">module</span> <span class="pl-en">top</span>
+<div class="highlight highlight-source-verilog"><pre><span class="pl-k">module</span> <span class="pl-en">top</span>
   (
    <span class="pl-k">input</span> CLK, 
    <span class="pl-k">input</span> RST,
@@ -133,7 +170,7 @@ This sample design adds the input value internally whtn the enable signal is ass
 
 <p>Let's try syntax analysis. Please type the command as below.</p>
 
-<pre><code>python3 pyverilog/vparser/parser.py test.v
+<pre><code>python pyverilog/vparser/parser.py test.v
 </code></pre>
 
 <p>Then you got the result as below. The result of syntax analysis is displayed.</p>
@@ -251,7 +288,7 @@ This sample design adds the input value internally whtn the enable signal is ass
 
 <p>Let's try dataflow analysis. Please type the command as below.</p>
 
-<pre><code>python3 pyverilog/dataflow/dataflow_analyzer.py -t top test.v 
+<pre><code>python pyverilog/dataflow/dataflow_analyzer.py -t top test.v 
 </code></pre>
 
 <p>Then you got the result as below. The result of each signal definition and each signal assignment are displayed.</p>
@@ -273,21 +310,21 @@ Bind:
 (Bind dest:top.led tree:(Partselect Var:(Terminal top.count) MSB:(IntConst 23) LSB:(IntConst 16)))
 </code></pre>
 
-<p>Let's view the result of dataflow analysis as a picture file. Now we select 'led' as the target. Please type the command as below.</p>
+<p>Let's view the result of dataflow analysis as a picture file. Now we select 'led' as the target. Please type the command as below. In this example, Graphviz and Pygraphviz are installed.</p>
 
-<pre><code>python3 pyverilog/dataflow/graphgen.py -t top -s top.led test.v 
+<pre><code>python pyverilog/dataflow/graphgen.py -t top -s top.led test.v 
 </code></pre>
 
 <p>Then you got a png file (out.png). The picture shows that the definition of 'led' is a part-selection of 'count' from 23-bit to 16-bit.</p>
 
-<p><img src="http://cdn-ak.f.st-hatena.com/images/fotolife/s/sxhxtxa/20140101/20140101045641.png" alt="out.png"></p>
+<p><img src="img/out.png" alt="out.png"></p>
 
 <h2>
 <a id="control-flow-analyzer" class="anchor" href="#control-flow-analyzer" aria-hidden="true"><span class="octicon octicon-link"></span></a>Control-flow analyzer</h2>
 
-<p>Let's try control-flow analysis. Please type the command as below.</p>
+<p>Let's try control-flow analysis. Please type the command as below. In this example, Graphviz and Pygraphviz are installed. If don't use Graphviz, please append "--nograph" option.</p>
 
-<pre><code>python2.7 pyverilog/controlflow/controlflow_analyzer.py -t top test.v 
+<pre><code>python pyverilog/controlflow/controlflow_analyzer.py -t top test.v 
 </code></pre>
 
 <p>Then you got the result as below. The result shows that the state machine structure and transition conditions to the next state in the state machine.</p>
@@ -306,9 +343,9 @@ Loop
 (0, 1, 2)
 </code></pre>
 
-<p>You got also a png file (top_state.png). The picture shows that the graphical structure of the state machine.</p>
+<p>You got also a png file (top_state.png), if you did not append "--nograph". The picture shows that the graphical structure of the state machine.</p>
 
-<p><img src="http://cdn-ak.f.st-hatena.com/images/fotolife/s/sxhxtxa/20140101/20140101045835.png" alt="top_state.png"></p>
+<p><img src="img/top_state.png" alt="top_state.png"></p>
 
 <h2>
 <a id="code-generator" class="anchor" href="#code-generator" aria-hidden="true"><span class="octicon octicon-link"></span></a>Code generator</h2>
@@ -316,7 +353,7 @@ Loop
 <p>Finally, let's try code generation. Please prepare a Python script as below. The file name is 'test.py'.
 A Verilog HDL code is represented by using the AST classes defined in 'vparser.ast'.</p>
 
-<div class="highlight highlight-python"><pre><span class="pl-k">import</span> pyverilog.vparser.ast <span class="pl-k">as</span> vast
+<div class="highlight highlight-source-python"><pre><span class="pl-k">import</span> pyverilog.vparser.ast <span class="pl-k">as</span> vast
 <span class="pl-k">from</span> pyverilog.ast_code_generator.codegen <span class="pl-k">import</span> ASTCodeGenerator
 
 params <span class="pl-k">=</span> vast.Paramlist(())
@@ -334,42 +371,38 @@ rslt <span class="pl-k">=</span> codegen.visit(ast)
 
 <p>Please type the command as below at the same directory with Pyverilog.</p>
 
-<pre><code>python3 test.py
+<pre><code>python test.py
 </code></pre>
 
 <p>Then Verilog HDL code generated from the AST instances is displayed.</p>
 
-<div class="highlight highlight-verilog"><pre>
-<span class="pl-k">module</span> <span class="pl-en">top</span>
- (
-  <span class="pl-k">input</span> [<span class="pl-c1">0</span>:<span class="pl-c1">0</span>] CLK, 
-<span class="pl-k">input</span> [<span class="pl-c1">0</span>:<span class="pl-c1">0</span>] RST, 
-<span class="pl-k">output</span> [<span class="pl-c1">7</span>:<span class="pl-c1">0</span>] led
+<div class="highlight highlight-source-verilog"><pre><span class="pl-k">module</span> <span class="pl-en">top</span>
+(
+  <span class="pl-k">input</span> CLK,
+  <span class="pl-k">input</span> RST,
+  <span class="pl-k">output</span> [<span class="pl-c1">7</span>:<span class="pl-c1">0</span>] led
+);
 
- );
   <span class="pl-k">assign</span> led <span class="pl-k">=</span> <span class="pl-c1">8</span>;
-<span class="pl-k">endmodule</span>
-</pre></div>
 
-<h1>
-<a id="publication" class="anchor" href="#publication" aria-hidden="true"><span class="octicon octicon-link"></span></a>Publication</h1>
-
-<ul>
-<li>Shinya Takamaeda-Yamazaki: Pyverilog: A Python-based Hardware Design Processing Toolkit for Verilog HDL, 11th International Symposium on Applied Reconfigurable Computing (ARC 2015) (Poster), Lecture Notes in Computer Science, Vol.9040/2015, pp.451-460, April 2015.
-<a href="http://link.springer.com/chapter/10.1007/978-3-319-16214-0_42">Paper</a>
-</li>
-</ul>
+<span class="pl-k">endmodule</span></pre></div>
 
 <h1>
 <a id="related-project-and-site" class="anchor" href="#related-project-and-site" aria-hidden="true"><span class="octicon octicon-link"></span></a>Related Project and Site</h1>
 
-<p><a href="http://shtaxxx.github.io/PyCoRAM/">PyCoRAM</a></p>
+<p><a href="https://github.com/PyHDI/veriloggen">Veriloggen</a></p>
+
+<ul>
+<li>A library for constructing a Verilog HDL source code in Python</li>
+</ul>
+
+<p><a href="https://github.com/PyHDI/PyCoRAM">PyCoRAM</a></p>
 
 <ul>
 <li>Python-based Portable IP-core Synthesis Framework for FPGA-based Computing</li>
 </ul>
 
-<p><a href="http://shtaxxx.github.io/flipSyrup/">flipSyrup</a></p>
+<p><a href="https://github.com/shtaxxx/flipSyrup">flipSyrup</a></p>
 
 <ul>
 <li>Cycle-Accurate Hardware Simulation Framework on Abstract FPGA Platforms</li>
@@ -404,7 +437,7 @@ rslt <span class="pl-k">=</span> codegen.visit(ast)
         </section>
 
         <footer>
-          Pyverilog is maintained by <a href="https://github.com/shtaxxx">shtaxxx</a><br>
+          Pyverilog is maintained by <a href="https://github.com/PyHDI">PyHDI</a><br>
           This page was generated by <a href="https://pages.github.com">GitHub Pages</a>. Tactile theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.
         </footer>
 
