@@ -1108,8 +1108,8 @@ class VerilogParser(PLYParser):
         p[0] = p[1]
         p.set_lineno(0, p.lineno(1))
 
-    def p_expression_repeat(self, p):
-        'expression : repeat'
+    def p_expression_repeatexp(self, p):
+        'expression : repeatexp'
         p[0] = p[1]
         p.set_lineno(0, p.lineno(1))
 
@@ -1158,9 +1158,9 @@ class VerilogParser(PLYParser):
         p[0] = (p[1],)
         p.set_lineno(0, p.lineno(1))
 
-    def p_repeat(self, p):
-        'repeat : LBRACE expression concat RBRACE'
-        p[0] = Repeat(p[3], p[2], lineno=p.lineno(1))
+    def p_repeatexp(self, p):
+        'repeatexp : LBRACE expression concat RBRACE'
+        p[0] = RepeatExp(p[3], p[2], lineno=p.lineno(1))
         p.set_lineno(0, p.lineno(1))
 
     def p_partselect(self, p):
@@ -1357,11 +1357,13 @@ class VerilogParser(PLYParser):
         """basic_statement : if_statement
         | case_statement
         | casex_statement
+        | casez_statement
         | for_statement
         | while_statement
         | event_statement
         | wait_statement
         | forever_statement
+        | repeat_statement
         | block
         | namedblock
         | parallelblock
@@ -1599,6 +1601,11 @@ class VerilogParser(PLYParser):
         p[0] = CasexStatement(p[3], p[5], lineno=p.lineno(1))
         p.set_lineno(0, p.lineno(1))
 
+    def p_casez_statement(self, p):
+        'casez_statement : CASEZ LPAREN case_comp RPAREN casecontent_statements ENDCASE'
+        p[0] = CasezStatement(p[3], p[5], lineno=p.lineno(1))
+        p.set_lineno(0, p.lineno(1))
+
     def p_case_comp(self, p):
         'case_comp : expression'
         p[0] = p[1]
@@ -1671,6 +1678,12 @@ class VerilogParser(PLYParser):
     def p_forever_statement(self, p):
         'forever_statement : FOREVER basic_statement'
         p[0] = ForeverStatement(p[2], lineno=p.lineno(1))
+        p.set_lineno(0, p.lineno(1))
+
+    ######################################################################
+    def p_repeat_statement(self, p):
+        'repeat_statement : REPEAT LPAREN intnumber  RPAREN basic_statement'
+        p[0] = RepeatStatement(p[3], p[5],  lineno=p.lineno(1))
         p.set_lineno(0, p.lineno(1))
 
     ######################################################################
@@ -2203,7 +2216,7 @@ class VerilogCodeParser(object):
     def preprocess(self):
         self.preprocessor.preprocess()
         text = open(self.preprocess_output).read()
-        os.remove(self.preprocess_output)
+        #os.remove(self.preprocess_output)
         return text
 
     def parse(self, preprocess_output='preprocess.output', debug=0):

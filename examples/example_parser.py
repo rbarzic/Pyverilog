@@ -35,6 +35,7 @@ def main():
         showVersion()
 
     for f in filelist:
+        print("-D- Parsing file : {}".format(f))
         if not os.path.exists(f): raise IOError("file not found: " + f)
 
     if len(filelist) == 0:
@@ -43,10 +44,11 @@ def main():
     ast, directives = parse(filelist,
                             preprocess_include=options.include,
                             preprocess_define=options.define)
-    
+
     ast.show()
     for lineno, directive in directives:
         print('Line %d : %s' % (lineno, directive))
-        
+
+
 if __name__ == '__main__':
     main()

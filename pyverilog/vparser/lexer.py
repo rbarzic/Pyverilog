@@ -46,8 +46,8 @@ class VerilogLexer(object):
         'INPUT', 'INOUT', 'OUTPUT', 'TRI', 'REG', 'WIRE', 'INTEGER', 'REAL', 'SIGNED',
         'PARAMETER', 'LOCALPARAM', 'SUPPLY0', 'SUPPLY1',
         'ASSIGN', 'ALWAYS', 'SENS_OR', 'POSEDGE', 'NEGEDGE', 'INITIAL',
-        'IF', 'ELSE', 'FOR', 'WHILE', 'CASE', 'CASEX', 'ENDCASE', 'DEFAULT',
-        'WAIT', 'FOREVER', 'DISABLE', 'FORK', 'JOIN',
+        'IF', 'ELSE', 'FOR', 'WHILE', 'CASE', 'CASEX', 'CASEZ', 'ENDCASE', 'DEFAULT',
+        'WAIT', 'FOREVER', 'REPEAT', 'DISABLE', 'FORK', 'JOIN',
         )
 
     reserved = {}
@@ -266,18 +266,18 @@ def dump_tokens(text):
     def my_error_func(msg, a, b):
         sys.write(msg + "\n")
         sys.exit()
-        
+
     lexer = VerilogLexer(error_func=my_error_func)
     lexer.build()
     lexer.input(text)
 
     ret = []
-    
+
     # Tokenize
     while True:
         tok = lexer.token()
         if not tok: break # No more input
         ret.append("%s %s %d %s %d\n" %
                    (tok.value, tok.type, tok.lineno, lexer.filename, tok.lexpos))
-        
+
     return ''.join(ret)
